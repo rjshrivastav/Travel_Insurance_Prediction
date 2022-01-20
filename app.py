@@ -14,13 +14,13 @@ def predict():
     '''
     For rendering results on HTML GUI
     '''
-    features = [x for x in request.form.values()]
-    final_features = [np.array(features)]
+    features = x for x in request.form.values()
+    final_features = np.array(features)
     prediction = model.predict_proba(final_features)[:,1]
 
-    output = prediction
+    output = prediction*100
 
-    return render_template('index.html', prediction_text='The chances of buying Travel insurance is {}%'.format(output))
+    return render_template('index.html', prediction_text='The chances of buying Travel insurance is {}%'.format(np.round(output,2)))
 
 
 if __name__ == "__main__":
