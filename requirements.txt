@@ -1,11 +1,13 @@
-Flask==1.1.1
-gunicorn==20.0.4
-itsdangerous==1.1.0
-Jinja2==2.11.3
-MarkupSafe==1.1.1
-Werkzeug==2.2.3
-scipy>=1.3.1
-scikit-learn>=0.24.1
-pandas>=0.25.1
-lightgbm>=3.2.0
-numpy>=1.16.1
+setuptools
+pandas
+numpy
+seaborn
+matplotlib
+scikit-learn
+lightgbm
+dill
+flask
+plotly
+optuna
+nbformat
+-e .
