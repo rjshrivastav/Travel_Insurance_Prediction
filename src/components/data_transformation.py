@@ -23,7 +23,7 @@ class DataTransformation:
 
     def get_data_transformer_object(self):
         try:
-            categorical_features = ['Employment Type',
+            categorical_features = ['Employment_Type',
                                     'GraduateOrNot',
                                     'FrequentFlyer',
                                     'EverTravelledAbroad']

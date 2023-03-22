@@ -1,28 +1,50 @@
 import numpy as np
 from flask import Flask, request, render_template
 import pickle
+import pandas as pd
+
+from src.pipeline.pred_pipeline import CustomData, PredictPipeline
 
 app = Flask(__name__)
-model = pickle.load(open('finalized_model.pkl', 'rb'))
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('home.html')
 
-@app.route('/predict',methods=['POST'])
+@app.route('/predict',methods=['GET','POST'])
 def predict():
     '''
     For rendering results on HTML GUI
     '''
-    features = [x for x in request.form.values()]
-    final_features = [np.array(features)]
-    prediction = model.predict_proba(final_features)[:,1]
+    if request.method=='GET':
+        return render_template('index.html')
+    else:
+        data = CustomData(
+            Age = request.form.get('Age'),
 
-    output = prediction
-    pred = [i * 100 for i in output]
+            Employment_Type = request.form.get('Employment_Type'),
 
-    return render_template('index.html', prediction_text='The chances of buying Travel insurance is {}%'.format(np.round(pred,2)))
+            GraduateOrNot = request.form.get('GraduateOrNot'),
+
+            AnnualIncome = request.form.get('AnnualIncome'),
+
+            FamilyMembers = request.form.get('FamilyMembers'),
+
+            ChronicDiseases = request.form.get('ChronicDiseases'),
+
+            FrequentFlyer = request.form.get('FrequentFlyer'),
+
+            EverTravelledAbroad = request.form.get('EverTravelledAbroad')
+        )
+        pred_df = data.get_data_as_dataframe()
+        print(pred_df)
+        predict_pipeline = PredictPipeline()
+        results = predict_pipeline.predict(pred_df)
+        print(results)
+
+
+        return render_template('index.html', prediction_text='The chances of buying Travel insurance is {}%'.format(results[0]))
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host = '0.0.0.0',debug=True)

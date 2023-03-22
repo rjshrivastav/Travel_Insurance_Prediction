@@ -20,9 +20,10 @@ def save_object(file_path, obj):
         raise CustomException(e,sys)
     
 
-def model_param(X_train,y_train,X_test,y_test, models, param):
+def model_param(X_train,y_train,X_test,y_test, models):
     try:
         def fit_lgb(X_train,y_train,X_test,y_test,models, param):
+            models.set_params(**param)
             models.fit(X_train, y_train,eval_set=[(X_test,y_test)], early_stopping_rounds=150, verbose=False)
     
             y_train_pred = models.predict_proba(X_train)[:,1]
@@ -40,7 +41,14 @@ def model_param(X_train,y_train,X_test,y_test, models, param):
         
         def objective(trial):
             acc = 0
-            model, log = fit_lgb(trial, X_train, y_train, X_test, y_test, models, param)
+            params={
+                    'reg_alpha' : trial.suggest_uniform('reg_alpha', 0.001, 0.1),
+                    'reg_lambda' : trial.suggest_uniform('reg_lambda',0.001, 0.1),
+                    'learning_rate' : trial.suggest_uniform('learning_rate', 0.03 , 0.07),
+                    'max_depth' : trial.suggest_int('max_depth', 1 , 20),
+                    'n_estimators' : trial.suggest_int('n_estimators', 100 , 20000)
+                }
+            model, log = fit_lgb(X_train, y_train, X_test, y_test, models, params)
             acc += log['valid roc_curve']
                 
             return acc
@@ -53,6 +61,12 @@ def model_param(X_train,y_train,X_test,y_test, models, param):
     except Exception as e:
         raise CustomException(e,sys)
     
+def load_model(file_path):
+    try:
+        with open(file_path,'rb') as file_obj:
+            return dill.load(file_obj)
+    except Exception as e:
+        raise CustomException(e,sys)
 
 def evaluate_model(X_train,y_train,X_test,y_test, models, param):
     try:
