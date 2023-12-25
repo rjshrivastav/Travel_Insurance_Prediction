@@ -43,7 +43,7 @@ def predict():
         print(results)
 
 
-        return render_template('index.html', prediction_text='The chances of buying Travel insurance is {}%'.format(results[0]))
+        return render_template('index.html', prediction_text='The chances of buying Travel insurance is {}%'.format(round(results[0]*100,2)))
 
 
 if __name__ == "__main__":
