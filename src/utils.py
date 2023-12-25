@@ -24,7 +24,7 @@ def model_param(X_train,y_train,X_test,y_test, models):
     try:
         def fit_lgb(X_train,y_train,X_test,y_test,models, param):
             models.set_params(**param)
-            models.fit(X_train, y_train,eval_set=[(X_test,y_test)], early_stopping_rounds=150, verbose=False)
+            models.fit(X_train, y_train,eval_set=[(X_test,y_test)])
     
             y_train_pred = models.predict_proba(X_train)[:,1]
             
