@@ -1,1 +1,70 @@
-<h1>Welcome to the home page</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Travel Insurance Prediction</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap');
+
+        body{
+            background-image: url(templates/pic.jpg);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            height: 100vh;
+            
+        }
+
+        .title-text{
+            display: flex;
+            justify-content: center;
+            font-size: 50px;
+            font-family: 'Rubik Doodle Shadow';
+        }
+
+        .predict-btn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button{
+            width: 200px;
+    border: 1px solid white;
+    border-radius: 20px;
+    height: 40px;
+    font-size: 25px;
+    cursor: pointer;
+        }
+
+        button:hover{
+            transform: translateX(2px);
+            background-color: black;
+            color: white;
+        }
+
+        .title-text{
+            background-image: url(templates/pic.jpg);
+            background-size: cover;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-stroke: rgb(125, 222, 227);
+            -webkit-text-stroke-width: 1px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="title-text">
+        <h1>Travel Insurance Prediction</h1>
+    </div>
+    <div class="predict-btn">
+        <form action = "https://rjtravel1.pythonanywhere.com/predict">
+            <button>Click Here</button>
+            </form>
+    </div>
+    
+</body>
+</html>
